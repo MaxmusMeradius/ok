@@ -1,0 +1,230 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node
+{
+  int no;
+  struct node *next;
+} *first;
+
+void insert_at_beg()
+{
+  struct node *p;
+  p = (struct node *)malloc(sizeof(struct node));
+  if (p == NULL)
+  {
+    printf("No Space Avaliable\n");
+  }
+  else
+  {
+    printf("Enter the Data :");
+    scanf("%d", &p->no);
+    p->next = first;
+    first = p;
+  }
+}
+
+void insert_at_pos(int pos)
+{
+  struct node *p, *temp;
+  p = (struct node *)malloc(sizeof(struct node));
+  if (p != NULL)
+  {
+    temp = first;
+    printf("Enter the Data :");
+    scanf("%d", &p->no);
+    p->next = NULL;
+    for (int i = 2; i <= pos - 1; i++)
+    {
+      if (temp == NULL)
+      {
+        return;
+      }
+      temp = temp->next;
+    }
+    if (temp == NULL)
+    {
+      printf("Not Inserted\n");
+    }
+    else
+    {
+      p->next = temp->next;
+      temp->next = p;
+      printf("Inserted\n");
+    }
+  }
+  else
+  {
+    printf("No Space Avaliable\n");
+  }
+}
+
+void insert_at_end()
+{
+  struct node *p, *temp;
+  p = (struct node *)malloc(sizeof(struct node));
+  temp = first;
+  if (p == NULL)
+  {
+    printf("No Space Avaliable\n");
+  }
+  else
+  {
+    printf("Enter the Data :");
+    scanf("%d", &p->no);
+    p->next = temp;
+    while (temp->next != NULL)
+    {
+      temp = temp->next;
+    }
+    temp->next = p;
+  }
+}
+
+void delete_at_beg()
+{
+  struct node *temp;
+  temp = first;
+  printf("Element Deleted : %d\n", first->no);
+  first = first->next;
+  free(temp);
+}
+
+void delete_at_pos(int pos)
+{
+  struct node *temp, *prev;
+  first = temp;
+  int i;
+  while (i < pos && temp->next != NULL)
+  {
+    prev = temp;
+    temp = temp->next;
+    i++;
+  }
+  prev->next = temp->next;
+  printf("Element Deleted : %d\n", temp->no);
+  free(temp);
+}
+
+void delete_at_end()
+{
+  struct node *temp, *prev;
+  temp = first;
+  while (temp->next != NULL)
+  {
+    prev = temp;
+    temp = temp->next;
+  }
+  prev->next = NULL;
+  printf("Element Deleted : %d\n", temp->no);
+  free(temp);
+}
+
+void create(int n)
+{
+  struct node *fnnode, *temp;
+  int i;
+  first = (struct node *)malloc(sizeof(struct node));
+  if (first == NULL)
+  {
+    printf("No Space Avaliable");
+  }
+  else
+  {
+    printf("Enter the data : ");
+    scanf("%d", &first->no);
+    first->next = NULL;
+    temp = first;
+    for (i = 2; i <= n; i++)
+    {
+      fnnode = (struct node *)malloc(sizeof(struct node));
+      if (fnnode == NULL)
+      {
+        printf("No Space Avaliable");
+      }
+      else
+      {
+        printf("Enter the data :");
+        scanf("%d", &fnnode->no);
+        fnnode->next = NULL;
+        temp->next = fnnode;
+        temp = fnnode;
+      }
+    }
+  }
+}
+
+void display()
+{
+  struct node *temp;
+  temp = first;
+  while (temp->next != NULL)
+  {
+    printf("%d -> ", temp->no);
+    temp = temp->next;
+  }
+  printf("NULL\n");
+}
+
+int main()
+{
+  int n;
+  printf("Enter no.of nodes : ");
+  scanf("%d", &n);
+  create(n);
+  int choice, pos;
+  printf("\nOPERATION OF Linked List :\n1.Insert at Beggining\n2.Insert at Position\n3.Insert at End\n4.Delete at Beggining\n5.Delete at Position\n6.Delete at End\n7.Display\n8.Exit\n");
+  do
+  {
+    printf("Enter a Choice : ");
+    scanf("%d", &choice);
+    switch (choice)
+    {
+    case 1:
+    {
+      insert_at_beg();
+      break;
+    }
+    case 2:
+    {
+      printf("Enter position to Insert : ");
+      scanf("%d", &pos);
+      insert_at_pos(pos);
+      break;
+    }
+    case 3:
+    {
+      insert_at_end();
+      break;
+    }
+    case 4:
+    {
+      delete_at_beg();
+      break;
+    }
+    case 5:
+    {
+      printf("Enter position to Insert : ");
+      scanf("%d", &pos);
+      delete_at_pos(pos);
+      break;
+    }
+    case 6:
+    {
+      delete_at_end();
+      break;
+    }
+    case 7:
+    {
+      display();
+      break;
+    }
+    case 8:
+    {
+      printf("Exit");
+      break;
+    }
+    }
+  } while (choice != 8);
+  return 0;
+}
