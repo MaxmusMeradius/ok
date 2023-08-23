@@ -1,0 +1,63 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct node
+{
+  int no;
+  struct node *next;
+} *first;
+
+void create(int n)
+{
+  struct node *fnnode, *temp;
+  int i;
+  first = (struct node *)malloc(sizeof(struct node));
+  if (first == NULL)
+  {
+    printf("No Space Avaliable");
+  }
+  else
+  {
+    printf("Enter the data : ");
+    scanf("%d", &first->no);
+    temp = first;
+    for (i = 2; i <= n; i++)
+    {
+      fnnode = (struct node *)malloc(sizeof(struct node));
+      if (fnnode == NULL)
+      {
+        printf("No Space Avaliable");
+      }
+      else
+      {
+        printf("Enter the data :");
+        scanf("%d", &fnnode->no);
+        fnnode->next = NULL;
+        temp->next = fnnode;
+        temp = fnnode;
+      }
+    }
+  }
+}
+
+void display()
+{
+  struct node *temp;
+  temp = first;
+  while (temp->next != NULL)
+  {
+    printf("%d -> ", temp->no);
+    temp = temp->next;
+  }
+  printf("%d", temp->no);
+}
+
+int main()
+{
+  int n;
+  printf("Enter the no.of nodes :");
+  scanf("%d", &n);
+  create(n);
+  printf("Single Linked List : ");
+  display();
+  return 0;
+}
