@@ -1,0 +1,77 @@
+#include <stdio.h>
+#define max 100
+
+int a[max][max], visited[max] = {0};
+int q[max];
+int f = -1, r = -1, n;
+
+void insert(int node)
+{
+  if (r == -1)
+  {
+    f = 0;
+    r = 0;
+  }
+  else
+  {
+    r++;
+  }
+  q[r] = node;
+}
+
+int del()
+{
+  int o;
+  o = q[f];
+  if (f == r)
+  {
+    f = -1;
+    r = -1;
+  }
+  else
+  {
+    f++;
+  }
+  return o;
+}
+
+void bfs()
+{
+  int source, pre, k;
+  printf("Enter the source node: ");
+  scanf("%d", &source);
+  insert(source);
+  visited[source] = 1;
+  do
+  {
+    pre = del();
+    printf("%d ", pre);
+    visited[pre] = 1;
+    for (k = 0; k < n; k++)
+    {
+      if ((a[pre][k] == 1) && (visited[k] == 0))
+      {
+        insert(k);
+        visited[k] = 1;
+      }
+    }
+  } while (f != -1);
+}
+
+int main()
+{
+  int i, j;
+  printf("Enter the no. of vertices: ");
+  scanf("%d", &n);
+  printf("Enter the adjacency matrix:\n");
+  for (i = 0; i < n; i++)
+  {
+    for (j = 0; j < n; j++)
+    {
+      scanf("%d", &a[i][j]);
+    }
+  }
+  printf("BFS traversal starting from source node:\n");
+  bfs();
+  return 0;
+}
