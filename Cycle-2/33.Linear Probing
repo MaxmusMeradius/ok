@@ -1,0 +1,54 @@
+#include <stdio.h>
+
+void insert(int data, int b[], int k, int i)
+{
+  int hf = (data + i) % k;
+  if (b[hf] == 0)
+  {
+    b[hf] = data;
+  }
+  else
+  {
+    i++;
+    insert(data, b, k, i);
+  }
+}
+
+int main()
+{
+  int n, k;
+  printf("Enter the no. of Elements: ");
+  scanf("%d", &n);
+
+  printf("Enter the Size the Hast Table: ");
+  scanf("%d", &k);
+
+  int a[n];
+  int b[k];
+  for (int i = 0; i < k; i++)
+  {
+    b[i] = 0;
+  }
+  printf("Enter the element of the table :\n");
+  for (int i = 0; i < n; i++)
+  {
+    scanf("%d", &a[i]);
+    insert(a[i], b, k, 0);
+  }
+
+  printf("Hash Table:\n");
+  for (int i = 0; i < k; i++)
+  {
+    printf("Element at position %d : ", i);
+    if (b[i] == 0)
+    {
+      printf("No Element\n");
+    }
+    else
+    {
+      printf("%d\n", b[i]);
+    }
+  }
+
+  return 0;
+}
